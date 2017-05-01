@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>RestTemplate Demo</title>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<h1>Post</h1>
+<p th:text="'title: ' + ${post.title}" />
+<p th:text="'content: ' + ${post.content}" />
+<a href="/posts/new">새글 작성하기</a>
+</body>
+</html>

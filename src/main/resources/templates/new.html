@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>RestTemplate Demo</title>
+    <meta charset="utf-8"/>
+    <style>
+        body {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>New</h1>
+
+<form action="#" th:action="@{/posts}" th:object="${post}" method="post">
+    <p>title: <input type="text" th:field="*{title}" /></p>
+    <p>content: </p>
+    <p><textarea th:field="*{content}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
