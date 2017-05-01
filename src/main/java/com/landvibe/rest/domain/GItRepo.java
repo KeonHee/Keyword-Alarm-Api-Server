@@ -1,6 +1,4 @@
-package com.landvibe.dto;
-
-import java.util.Date;
+package com.landvibe.rest.domain;
 
 /**
  * Created by user on 2017-05-01.

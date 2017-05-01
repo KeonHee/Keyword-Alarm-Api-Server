@@ -1,7 +1,6 @@
-package com.landvibe.service;
+package com.landvibe.rest.service;
 
-import com.landvibe.dto.GItRepo;
-import org.springframework.stereotype.Service;
+import com.landvibe.rest.domain.GItRepo;
 
 import java.util.List;
 

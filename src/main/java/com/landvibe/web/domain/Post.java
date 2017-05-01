@@ -1,4 +1,4 @@
-package com.landvibe;
+package com.landvibe.web.domain;
 
 import java.util.Date;
 
