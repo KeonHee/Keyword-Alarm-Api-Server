@@ -11,7 +11,7 @@ public class GItRepo {
     private String name;
     private String description;
     private String url;
-    private Date created_at;
+    private String created_at;
 
     public long getId() {
         return id;
@@ -45,11 +45,11 @@ public class GItRepo {
         this.url = url;
     }
 
-    public Date getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 }

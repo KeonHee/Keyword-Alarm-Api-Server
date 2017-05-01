@@ -27,4 +27,5 @@ public class GitController {
         List<GItRepo> gItRepoList = gitRepoService.searchGitRepository(query);
         return gItRepoList;
     }
+
 }

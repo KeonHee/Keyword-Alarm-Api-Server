@@ -1,12 +1,17 @@
 package com.landvibe.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.landvibe.dto.GItRepo;
+import org.springframework.boot.json.JacksonJsonParser;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.io.IOException;
+import java.net.URI;
+import java.util.*;
 
 /**
  * Created by user on 2017-05-01.
@@ -15,20 +20,43 @@ import java.util.List;
 public class GItRepoServiceImpl implements GitRepoService {
     @Override
     public List<GItRepo> searchGitRepository(String query) {
-        //2013-01-05T17:58:47Z
-        //SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-ddTkk-mm-ss");
+
+        /* HttpComponentsClientHttpRequestFactory 사용시 HttpClient NotFoundException 발생*/
+//        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+//        factory.setReadTimeout(1000 * 60 * 2);  // 2분
+//        factory.setConnectTimeout(5000);
+        RestTemplate restTemplate = new RestTemplate(); //@TODO Timeout 설정하기
+
+        //https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+        URI gitHubSearchUri = UriComponentsBuilder.newInstance().scheme("https").host("api.github.com")
+                .path("/search/repositories")
+                .queryParam("q",query)
+                .queryParam("sort","stars")
+                .queryParam("order","desc")
+                .build()
+                .toUri();
+
+        String response = restTemplate.getForObject(gitHubSearchUri,String.class); //@TODO response 로그찍기
 
         List<GItRepo> list = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            GItRepo gItRepo = new GItRepo();
-            gItRepo.setId(i);
-            gItRepo.setName(query+" "+String.valueOf(i));
-            gItRepo.setDescription("test description " + String.valueOf(i));
-            gItRepo.setUrl("https://api.github.com/repos/"+query);
-            gItRepo.setCreated_at(Calendar.getInstance().getTime());
-            list.add(gItRepo);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = objectMapper.readTree(response);
+            JsonNode items = jsonNode.get("items");
+            Iterator<JsonNode> itemsIter = items.elements();
+            while (itemsIter.hasNext()){
+                JsonNode item = itemsIter.next();
+                GItRepo gitRepo = new GItRepo();
+                gitRepo.setId(item.get("id").asLong());
+                gitRepo.setName(item.get("name").asText());
+                gitRepo.setDescription(item.get("description").asText());
+                gitRepo.setUrl(item.get("url").asText());
+                gitRepo.setCreated_at(item.get("created_at").asText());
+                list.add(gitRepo);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
         return list;
     }
 }
