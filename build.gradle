@@ -25,12 +25,16 @@ repositories {
 dependencies {
 
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-tomcat')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 	/* DB */
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	runtime('com.h2database:h2')
+	compile('org.projectlombok:lombok:1.16.0')
+	compile('mysql:mysql-connector-java:5.1.41')
+	//compile('org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc3:1.16')
+	//runtime('com.h2database:h2')
 
 	/* Template */
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')

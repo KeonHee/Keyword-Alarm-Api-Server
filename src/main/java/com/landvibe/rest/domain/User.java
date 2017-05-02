@@ -1,11 +1,18 @@
 package com.landvibe.rest.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 /**
  * Created by user on 2017-05-01.
  */
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class User{
 
     @Id
@@ -17,10 +24,6 @@ public class User{
 
     @Column
     private String userId;
-
-    public User(){
-
-    }
 
     public User(String name, String userId){
         this.name=name;
