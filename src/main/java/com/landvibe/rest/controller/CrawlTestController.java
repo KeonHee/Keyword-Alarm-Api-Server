@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,13 @@ public class CrawlTestController {
     public String authInhaPlaza(){
         RestTemplate restTemplate = new RestTemplate(); //@TODO Timeout 설정하기
 
+
+        /**
+         * 미 인증 상태의 응답 페이지 요청 후에
+         *
+         * id, password 암호화
+         *
+         */
 
         /**
          *  인증정보 요청
@@ -80,4 +88,40 @@ public class CrawlTestController {
 
         return location.toString();
     }
+
+    @RequestMapping(value = "/reqeust/board/{sessionId}", method = RequestMethod.GET)
+    public String requestBoard(@PathVariable String sessionId){
+        /**
+         *  게시글 요청
+         *  > header의 location으로 상세 url 응답
+         */
+
+        RestTemplate restTemplate = new RestTemplate();
+        //http://www.inha.ac.kr/user/boardList.do?command=view&boardId=235757&boardSeq=5408968&id=plaza_010100000000
+        URI dataUrl = UriComponentsBuilder.newInstance().scheme("http").host("www.inha.ac.kr")
+                .path("/user/boardList.do")
+                .queryParam("command","view")
+                .queryParam("boardId","235757")
+                .queryParam("boardSeq","5408968")
+                .queryParam("id","plaza_010100000000")
+                .build()
+                .toUri();
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.add("Cookie", "JSESSIONID=A8FC2E6D0C9EA90A6924BA95C79F3529;");
+
+        HttpEntity requestEntity = new HttpEntity(null, requestHeaders);
+
+        HttpEntity<String> responsePage = restTemplate.exchange(dataUrl,HttpMethod.GET,requestEntity,String.class);
+
+        HttpHeaders responseHeader = responsePage.getHeaders();
+        String response = responsePage.getBody();
+        //URI location = responseHeader.getLocation();
+        System.out.println(responseHeader);
+        System.out.println(response);
+
+        return response;
+    }
+
+
 }
