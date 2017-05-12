@@ -35,7 +35,7 @@ public class UserController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public List<User> list(Model model){
-        List<User> users = userService.findall();
+        List<User> users = userService.findAll();
         return users;
     }
 

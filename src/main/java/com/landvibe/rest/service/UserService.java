@@ -10,23 +10,12 @@ import java.util.List;
 /**
  * Created by user on 2017-05-02.
  */
-@Service
-public class UserService {
+public interface UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    User addUser(String name, String userId);
 
-    public User addUser(String name, String userId){
-        User user = new User(name,userId);
-        return userRepository.save(user);
-    }
+    List<User> findAll();
 
-    public List<User> findall(){
-        return  userRepository.findAll();
-    }
-
-    public User findById(long id){
-        return userRepository.findOne(id);
-    }
+    User findById(long id);
 
 }
