@@ -1,5 +1,6 @@
 package com.landvibe.rest.controller;
 
+import com.landvibe.util.RSAUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,19 +21,11 @@ import java.util.Map;
  * Created by user on 2017-05-02.
  */
 @RestController
-public class CrawlTestController {
+public class CrawlingController {
 
     @RequestMapping(value = "/crawltest", method = RequestMethod.GET)
     public String authInhaPlaza(){
         RestTemplate restTemplate = new RestTemplate(); //@TODO Timeout 설정하기
-
-
-        /**
-         * 미 인증 상태의 응답 페이지 요청 후에
-         *
-         * id, password 암호화
-         *
-         */
 
         /**
          *  인증정보 요청
@@ -43,9 +36,16 @@ public class CrawlTestController {
                 .build()
                 .toUri();
 
+        RSAUtils rsaUtils = RSAUtils.getInstance();
+        String m = "84d776ac2f36b4f976e5149767f64a420f7db80d6c158cc8be1e06ee7f88f8f9dc25096d92dc4ea2352e4d35dd17071cd26a7231e2789d8829788c989fbe478b516b240094c42958b7fdb77dbfe87f3be5e163f40b558a0646c2ab22af0cb84f0bf88c18b1bb79ed83b46594a7ba8ceb8d94efef292517edf9194efd8942f5d9";
+        String e = "10001";
+        rsaUtils.init(m,e);
+        String encId = rsaUtils.encrypt("12121442");
+        String encPassword = rsaUtils.encrypt("inputPw");
+
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-        parameters.add("userId","12121442");
-        parameters.add("userPw","password"); //@TODO password 입력!
+        parameters.add("userId",encId);
+        parameters.add("userPw",encPassword); //@TODO password 입력!
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/x-www-form-urlencoded");
@@ -54,7 +54,12 @@ public class CrawlTestController {
 
         HttpEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
 
+        String responseBody = response.getBody();
+        System.out.println("responseBody" + responseBody);
+
         HttpHeaders responseHeaders = response.getHeaders();
+        System.out.println("responseHeaders"+responseHeaders);
+
         String cookies[] = responseHeaders.get("Set-Cookie").get(0).split("=|;");
         for (String cookie : cookies){
             System.out.println("cookie : " + cookie);
@@ -108,7 +113,7 @@ public class CrawlTestController {
                 .toUri();
 
         HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("Cookie", "JSESSIONID=A8FC2E6D0C9EA90A6924BA95C79F3529;");
+        requestHeaders.add("Cookie", "JSESSIONID="+sessionId+";");
 
         HttpEntity requestEntity = new HttpEntity(null, requestHeaders);
 

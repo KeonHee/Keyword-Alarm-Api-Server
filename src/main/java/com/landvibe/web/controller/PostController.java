@@ -1,6 +1,6 @@
 package com.landvibe.web.controller;
 
-import com.landvibe.web.domain.Post;
+import com.landvibe.domain.Post;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

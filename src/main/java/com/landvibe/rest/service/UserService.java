@@ -1,6 +1,6 @@
 package com.landvibe.rest.service;
 
-import com.landvibe.rest.domain.User;
+import com.landvibe.domain.User;
 import com.landvibe.rest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

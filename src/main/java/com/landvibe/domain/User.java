@@ -1,4 +1,4 @@
-package com.landvibe.rest.domain;
+package com.landvibe.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

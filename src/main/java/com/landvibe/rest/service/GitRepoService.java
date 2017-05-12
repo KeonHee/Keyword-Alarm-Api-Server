@@ -1,6 +1,6 @@
 package com.landvibe.rest.service;
 
-import com.landvibe.rest.domain.GItRepo;
+import com.landvibe.domain.GItRepo;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.landvibe.rest.domain;
+package com.landvibe.domain;
 
 /**
  * Created by user on 2017-05-01.

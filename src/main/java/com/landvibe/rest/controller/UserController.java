@@ -1,6 +1,6 @@
 package com.landvibe.rest.controller;
 
-import com.landvibe.rest.domain.User;
+import com.landvibe.domain.User;
 import com.landvibe.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

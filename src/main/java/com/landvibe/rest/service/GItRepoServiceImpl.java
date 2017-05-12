@@ -2,7 +2,7 @@ package com.landvibe.rest.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.landvibe.rest.domain.GItRepo;
+import com.landvibe.domain.GItRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;

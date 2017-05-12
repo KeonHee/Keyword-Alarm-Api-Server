@@ -1,6 +1,6 @@
 package com.landvibe.rest.repository;
 
-import com.landvibe.rest.domain.User;
+import com.landvibe.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
