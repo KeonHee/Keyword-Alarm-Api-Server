@@ -1,4 +1,4 @@
-package com.landvibe.web.service;
+package com.landvibe.service;
 
 import com.landvibe.domain.AuthSession;
 

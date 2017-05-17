@@ -1,4 +1,4 @@
-package com.landvibe.web.repository;
+package com.landvibe.repository;
 
 import com.landvibe.domain.AuthSession;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.landvibe.rest.service;
+package com.landvibe.service;
 
 import com.landvibe.domain.GItRepo;
 

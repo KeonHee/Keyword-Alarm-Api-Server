@@ -1,8 +1,7 @@
 package com.landvibe.web.controller;
 
 import com.landvibe.domain.AuthSession;
-import com.landvibe.web.service.AuthSessionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.landvibe.service.AuthSessionService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created by user on 2017-05-13.

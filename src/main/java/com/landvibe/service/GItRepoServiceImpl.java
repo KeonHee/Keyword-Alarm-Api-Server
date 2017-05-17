@@ -1,4 +1,4 @@
-package com.landvibe.rest.service;
+package com.landvibe.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

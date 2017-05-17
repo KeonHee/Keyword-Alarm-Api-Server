@@ -1,5 +1,7 @@
 package com.landvibe.rest.controller;
 
+import com.landvibe.domain.AuthSession;
+import com.landvibe.service.AuthSessionService;
 import com.landvibe.util.RSAUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.annotation.Resource;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +25,9 @@ import java.util.Map;
  */
 @RestController
 public class CrawlingController {
+
+    @Resource(name = "AuthSessionService")
+    private AuthSessionService authSessionService;
 
     @RequestMapping(value = "/crawltest", method = RequestMethod.GET)
     public String authInhaPlaza(){
@@ -94,12 +100,20 @@ public class CrawlingController {
         return location.toString();
     }
 
-    @RequestMapping(value = "/reqeust/board/{sessionId}", method = RequestMethod.GET)
-    public String requestBoard(@PathVariable String sessionId){
+    @RequestMapping(value = "/request/board", method = RequestMethod.GET)
+    public String requestBoard(){
         /**
          *  게시글 요청
          *  > header의 location으로 상세 url 응답
          */
+        AuthSession authSession=null;
+        try {
+            authSession = authSessionService.findLastOne();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return "nothing session id";
+        }
+        String sessionId = authSession.getSession();
 
         RestTemplate restTemplate = new RestTemplate();
         //http://www.inha.ac.kr/user/boardList.do?command=view&boardId=235757&boardSeq=5408968&id=plaza_010100000000

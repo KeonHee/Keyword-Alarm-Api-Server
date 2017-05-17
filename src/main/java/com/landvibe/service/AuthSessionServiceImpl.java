@@ -1,7 +1,7 @@
-package com.landvibe.web.service;
+package com.landvibe.service;
 
 import com.landvibe.domain.AuthSession;
-import com.landvibe.web.repository.AuthSessionRepository;
+import com.landvibe.repository.AuthSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class AuthSessionServiceImpl implements AuthSessionService {
     AuthSessionRepository authSessionRepository;
 
     @Override
-    public AuthSession findLastOne() {
+    public AuthSession findLastOne() throws NullPointerException{
         List<AuthSession> authSessionList = authSessionRepository.findAll();
         if(authSessionList.isEmpty()){
             return null;

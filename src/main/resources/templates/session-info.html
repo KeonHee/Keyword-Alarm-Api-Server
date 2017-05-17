@@ -3,15 +3,58 @@
 <head>
     <title>Session Management</title>
     <meta charset="utf-8"/>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../static/materialize/css/materialize.min.css"  media="screen,projection" th:href="@{materialize/css/materialize.min.css}" />
+
 </head>
 <body>
 
-<h2 th:text="'Current Session: ' + ${sessionInfo.session}"></h2>
+    <h2 th:text="'Current Session: ' + ${sessionInfo.session}"></h2>
+    <div class="row">
+        <form action="#" th:action="@{/auth-sessions}" th:object="${authSession}" method="post" class="col s8">
+            <div class="row">
+                <div class="input-field col s12 inline">
+                    <input id="sessionId" type="text" th:field="*{session}" class="validate"/>
+                    <label for="sessionId">Session ID</label>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Submit" class="waves-effect waves-light btn" />
+                <input type="reset" value="Reset" class="waves-effect waves-light btn" />
+                <button class="waves-effect waves-light btn" id="deleteAllSession">Clear Sessions</button>
+            </div>
+        </form>
+    </div>
 
-<form action="#" th:action="@{/auth-sessions}" th:object="${authSession}" method="post">
-    <p>session Id : <input type="text" th:field="*{session}"/></p>
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-</form>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="../static/js/jquery-3.2.1.min.js" th:src="@{js/jquery-3.2.1.min.js}"></script>
+    <script type="text/javascript" src="../static/materialize/js/materialize.min.js" th:src="@{materialize/js/materialize.min.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#deleteAllSession").click(function(){
+                console.log("모든 세션 삭제");
+                var timer=0;
+                clearTimeout(timer);
+                timer = setTimeout(
+                        $.ajax({
+                            url: '/auth-sessions',
+                            type: 'DELETE',
+                            success: function(msg) {
+                                // Do something with the result
+                                console.log("response msg : " + msg);
+                            },
+                            error: function (xhr, status, error) {
+                                console.log("xhr : " + xhr);
+                                console.log("status : " + status);
+                                console.log("error : " + error);
+                            }
+                        })
+                ,500);
+
+
+            });
+        });
+    </script>
 
 </body>
 </html>
